@@ -1,3 +1,17 @@
+html {
+
+}
+
+body {
+    background-color: #6a7b83;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+
+}
+
 .resource-A1 { background: url('resources.png') 0px 0px; width: 165px; height: 165px; }
 .resource-A2 { background: url('resources.png') 0px -165px; width: 165px; height: 165px; }
 .resource-A3 { background: url('resources.png') 0px -330px; width: 165px; height: 165px; }
@@ -40,14 +54,31 @@
 .resource-F5 { background: url('resources.png') -825px -660px; width: 165px; height: 165px; }
 .resource-F6 { background: url('resources.png') -825px -825px; width: 165px; height: 165px; }
 
-.inventory-item, .incoming-item {
+.inventory-item, .incoming-item, .crafting-item {
+    position: relative;
     display: inline-block;
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     overflow: hidden; /* Ensures the inner div doesn't exceed the outer div's boundaries */
 }
 
-.inventory-item div, .incoming-item div {
-    transform: scale(0.3878); /* Scale down to fit 80x80 (80/165) */
+.inventory-item div, .incoming-item div, .crafting-item div {
+    transform: scale(0.4848); /* Scale down to fit 80x80 (80/165) */
     transform-origin: top left;
 } 
+
+.crafting-item span {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#inventory, #objects, #crafting {
+    width: 650px;
+}
+
+#objects {
+    min-height: 100px;
+}

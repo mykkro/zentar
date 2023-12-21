@@ -10,24 +10,8 @@
 <body>
     <h1>Asteroid Miner</h1>
 
-    <!-- Your jQuery code can go here -->
-
-    <!-- Example: Change text color on button click -->
-    <button id="changeColorButton">Change Text Color</button>
-
     <div id="game">
-        <div>
-            <span><strong>Score:</strong></span>
-            <span id="score">0</span>
-        </div>
-        <div>
-            <span><strong>Time:</strong></span>
-            <span id="time">0</span>
-        </div>
-        <div>
-            <span><strong>Game Over:</strong></span>
-            <span id="gameOver">false</span>
-        </div>
+
         <h2>Incoming Objects</h2>
         <div id="objects">
             </div>
@@ -35,6 +19,12 @@
         <div id="inventory">
 
         </div>
+
+        <h2>Crafting</h2>
+        <div id="crafting">
+
+        </div>
+
     </div>
         
     <script>        
@@ -47,8 +37,37 @@
             "Diamond": "resource-E3",
             "Ulerite": "resource-F1",
             "Redball": "resource-A2",
-            "Sunstone": "resource-E4"
+            "Sunstone": "resource-E4",
+
+            "Iron Bar": "resource-F5",
+            "Iron Plate": "resource-B5",
+            "Gold Bar": "resource-F6",
+            "Wire": "resource-D2",
+
         }
+
+        class CraftingRecipe {
+            constructor(name, ingredients, resulting_quantity) {
+                this.name = name;
+                this.ingredients = ingredients;
+                this.resulting_quantity = resulting_quantity;
+            }
+        }
+
+        class ObjectWithQuantity {
+            constructor(name, quantity) {
+                this.quantity = quantity;
+                this.name = name;
+            }
+        }
+
+        const recipes = {
+            "Iron Bar": new CraftingRecipe("Iron Bar", [new ObjectWithQuantity("Iron Ore", 2)], 1),
+            "Iron Plate": new CraftingRecipe("Iron Plate", [new ObjectWithQuantity("Iron Ore", 1)], 1),
+            "Gold Bar": new CraftingRecipe("Gold Bar", [new ObjectWithQuantity("Gold Ore", 2)], 1),
+            "Wire": new CraftingRecipe("Wire", [new ObjectWithQuantity("Redball", 1)], 2),
+        }
+
 
         class ObjectWithDuration {
             constructor(name, duration) {
@@ -88,6 +107,40 @@
                 this.objects = [];
                 this.inventory = [];
                 this.inventoryMaxSize = 35;
+            }
+
+            inventoryWithQuantities() {
+                var inventory = {};
+                this.inventory.forEach(item => {
+                    if (inventory[item]) {
+                        inventory[item].quantity += 1;
+                    } else {
+                        inventory[item] = new ObjectWithQuantity(item, 1);
+                    }
+                });
+                return inventory;
+            }
+
+            findUsableRecipes() {
+                var iq = this.inventoryWithQuantities();
+                var usable = [];
+                Object.keys(recipes).forEach(recipe_name => {
+                    var recipe = recipes[recipe_name];
+                    if (this.canCraft(iq, recipe)) {
+                        usable.push(recipe);
+                    }
+                });
+                return usable;
+            }
+
+            canCraft(iq, recipe) {
+                var canCraft = true;
+                recipe.ingredients.forEach(ingredient => {
+                    if (!iq[ingredient.name] || iq[ingredient.name].quantity < ingredient.quantity) {
+                        canCraft = false;
+                    }
+                });
+                return canCraft;
             }
 
             start() {
@@ -163,7 +216,15 @@
                 // update inventory
                 $("#inventory").empty();
                 this.inventory.forEach(item => {
-                    $("#inventory").append(`<div class="inventory-item"><div class="${klass_map[item]}"></div></div>`);
+                    $("#inventory").append(`<div class="inventory-item" title="${item}"><div class="${klass_map[item]}"></div></div>`);
+                });
+
+                // update crafting recipes
+                var craftables = this.findUsableRecipes();
+                console.log("Craftables:", craftables);
+                $("#crafting").empty();
+                craftables.forEach(recipe => {
+                    $("#crafting").append(`<div class="crafting-item" title="${recipe.name}"><div class="${klass_map[recipe.name]}"></div><span>${recipe.resulting_quantity}</span></div>`);
                 });
             }
 
@@ -181,8 +242,9 @@
                 // update display of objects
                 $("#objects").empty();
                 this.objects.forEach(item => {
-                    $("#objects").append(`<div class="incoming-item" style="opacity: ${1.0-item.progress()};"><div class="${klass_map[item.name]}"></div></div>`);
+                    $("#objects").append(`<div class="incoming-item" title="${item.name}" style="opacity: ${1.0-item.progress()};"><div class="${klass_map[item.name]}"></div></div>`);
                 });
+
             }
 
             incrementTime() {
