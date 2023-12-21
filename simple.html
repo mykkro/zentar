@@ -18,7 +18,7 @@
         <h2>Incoming Objects</h2>
         <div id="objects">
             </div>
-        <h2>Inventory <button class="sci-fi-button" id="dump-inventory">Dump it!</button></h2>
+        <h2>Inventory (value: <span id="inventory-value">0</span>) <button class="sci-fi-button" id="dump-inventory">Dump it!</button></h2>
         
         <div id="inventory">
 
@@ -376,6 +376,21 @@ var starField = new StarField('fullScreen').render(500, 10);
             "Wire": new CraftingRecipe("wire", "Wire", [new ObjectWithQuantity("Redball", 1)], 2),
         }
 
+        // prices of individual objects in cosmic dollars.
+        const object_values = {
+            "Iron Ore": 1,
+            "Gold Ore": 10,
+            "Diamond": 100,
+            "Ulerite": 1000,
+            "Redball": 2,
+            "Sunstone": 200,
+
+            "Iron Bar": 10,
+            "Iron Plate": 5,
+            "Gold Bar": 100,
+            "Wire": 5,
+        }
+
 
         class InventoryItem {
             constructor(name) {
@@ -458,6 +473,15 @@ var starField = new StarField('fullScreen').render(500, 10);
                 return usable;
             }
 
+            calculateInventoryValue() {
+                var iq = this.inventoryWithQuantities();
+                var value = 0;
+                Object.keys(iq).forEach(item_name => {
+                    value += iq[item_name].quantity * object_values[item_name];
+                });
+                return value;
+            }
+
             canCraft(iq, recipe) {
                 var canCraft = true;
                 recipe.ingredients.forEach(ingredient => {
@@ -498,22 +522,22 @@ var starField = new StarField('fullScreen').render(500, 10);
                 // 10% probability of spawning Iron Ore
                 // duration (in time): 5 sesonds (50 ticks)
                 if(Math.random() < 0.1) {
-                    this.objects.push(new ObjectWithDuration("Iron Ore", 20));
+                    this.objects.push(new ObjectWithDuration("Iron Ore", 10));
                 }
                 if(Math.random() < 0.03) {
-                    this.objects.push(new ObjectWithDuration("Gold Ore", 15));
+                    this.objects.push(new ObjectWithDuration("Gold Ore", 8));
                 }
                 if(Math.random() < 0.01) {
-                    this.objects.push(new ObjectWithDuration("Diamond", 10));
+                    this.objects.push(new ObjectWithDuration("Diamond", 5));
                 }
                 if(Math.random() < 0.01) {
-                    this.objects.push(new ObjectWithDuration("Ulerite", 10));
+                    this.objects.push(new ObjectWithDuration("Ulerite", 4));
                 }
                 if(Math.random() < 0.01) {
-                    this.objects.push(new ObjectWithDuration("Redball", 10));
+                    this.objects.push(new ObjectWithDuration("Redball", 2));
                 }
                 if(Math.random() < 0.01) {
-                    this.objects.push(new ObjectWithDuration("Sunstone", 10));
+                    this.objects.push(new ObjectWithDuration("Sunstone", 2));
                 }
             }
 
@@ -564,6 +588,9 @@ var starField = new StarField('fullScreen').render(500, 10);
                         });
                     }
                 });
+
+                var inventoryValue = this.calculateInventoryValue();
+                $("#inventory-value").text(inventoryValue+"");
 
                 // update crafting recipes
                 var craftables = this.findUsableRecipes();
