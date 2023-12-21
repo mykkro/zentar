@@ -18,7 +18,8 @@
         <h2>Incoming Objects</h2>
         <div id="objects">
             </div>
-        <h2>Inventory</h2>
+        <h2>Inventory <button class="sci-fi-button" id="dump-inventory">Dump it!</button></h2>
+        
         <div id="inventory">
 
         </div>
@@ -335,7 +336,7 @@ var starField = new StarField('fullScreen').render(500, 10);
 
     const soundPlayer = new SoundPlayer();
 
-        const GAME_TIMEOUT = 1000
+        const GAME_TIMEOUT = 10000
 
         const klass_map = {
             "Iron Ore": "resource-E6",
@@ -427,6 +428,10 @@ var starField = new StarField('fullScreen').render(500, 10);
                 this.inventory = [];
                 this.inventoryMaxSize = 40;
                 this.craftables = [];
+
+                $("#dump-inventory").click(() => {
+                    this.inventory = [];
+                });
             }
 
             inventoryWithQuantities() {
@@ -550,8 +555,9 @@ var starField = new StarField('fullScreen').render(500, 10);
                         elem.click(() => {
                             console.log("clicked on", item.name, item.id);
                             for(var i=0; i<this.inventory.length; i++) {
-                                if (this.inventory[i].id === item.id) {
+                                if (this.inventory[i].id === item.id && !this.inventory[i].markedForRemoval) {
                                     this.inventory[i].markedForRemoval = true;
+                                    soundPlayer.playSound("media/one_beep-99630.mp3");
                                     break;
                                 }
                             }
@@ -567,6 +573,7 @@ var starField = new StarField('fullScreen').render(500, 10);
                     var id = elem.id.split("-")[1];
                     if (!activeCraftingIds.includes(id)) {
                         $(elem).remove();
+
                     }
                 });
                 craftables.forEach(recipe => {
@@ -606,7 +613,7 @@ var starField = new StarField('fullScreen').render(500, 10);
                 for(var i=0; i<recipe.resulting_quantity; i++) {
                     this.inventory.push(new InventoryItem(recipe.name));
                 }
-                soundPlayer.playSound("media/blip-131856.mp3");
+                soundPlayer.playSound("media/blip-131856.mp3");                
                 
             }
 
