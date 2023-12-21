@@ -1,0 +1,54 @@
+.resource-A1 { background: url('resources.png') 0px 0px; width: 165px; height: 165px; }
+.resource-A2 { background: url('resources.png') 0px -165px; width: 165px; height: 165px; }
+.resource-A3 { background: url('resources.png') 0px -330px; width: 165px; height: 165px; }
+.resource-A4 { background: url('resources.png') 0px -495px; width: 165px; height: 165px; }
+.resource-A5 { background: url('resources.png') 0px -660px; width: 165px; height: 165px; }
+.resource-A6 { background: url('resources.png') 0px -825px; width: 165px; height: 165px; }
+
+.resource-B1 { background: url('resources.png') -165px 0px; width: 165px; height: 165px; }
+.resource-B2 { background: url('resources.png') -165px -165px; width: 165px; height: 165px; }
+.resource-B3 { background: url('resources.png') -165px -330px; width: 165px; height: 165px; }
+.resource-B4 { background: url('resources.png') -165px -495px; width: 165px; height: 165px; }
+.resource-B5 { background: url('resources.png') -165px -660px; width: 165px; height: 165px; }
+.resource-B6 { background: url('resources.png') -165px -825px; width: 165px; height: 165px; }
+
+.resource-C1 { background: url('resources.png') -330px 0px; width: 165px; height: 165px; }
+.resource-C2 { background: url('resources.png') -330px -165px; width: 165px; height: 165px; }
+.resource-C3 { background: url('resources.png') -330px -330px; width: 165px; height: 165px; }
+.resource-C4 { background: url('resources.png') -330px -495px; width: 165px; height: 165px; }
+.resource-C5 { background: url('resources.png') -330px -660px; width: 165px; height: 165px; }
+.resource-C6 { background: url('resources.png') -330px -825px; width: 165px; height: 165px; }
+
+.resource-D1 { background: url('resources.png') -495px 0px; width: 165px; height: 165px; }
+.resource-D2 { background: url('resources.png') -495px -165px; width: 165px; height: 165px; }
+.resource-D3 { background: url('resources.png') -495px -330px; width: 165px; height: 165px; }
+.resource-D4 { background: url('resources.png') -495px -495px; width: 165px; height: 165px; }
+.resource-D5 { background: url('resources.png') -495px -660px; width: 165px; height: 165px; }
+.resource-D6 { background: url('resources.png') -495px -825px; width: 165px; height: 165px; }
+
+.resource-E1 { background: url('resources.png') -660px 0px; width: 165px; height: 165px; }
+.resource-E2 { background: url('resources.png') -660px -165px; width: 165px; height: 165px; }
+.resource-E3 { background: url('resources.png') -660px -330px; width: 165px; height: 165px; }
+.resource-E4 { background: url('resources.png') -660px -495px; width: 165px; height: 165px; }
+.resource-E5 { background: url('resources.png') -660px -660px; width: 165px; height: 165px; }
+.resource-E6 { background: url('resources.png') -660px -825px; width: 165px; height: 165px; }
+
+.resource-F1 { background: url('resources.png') -825px 0px; width: 165px; height: 165px; }
+.resource-F2 { background: url('resources.png') -825px -165px; width: 165px; height: 165px; }
+.resource-F3 { background: url('resources.png') -825px -330px; width: 165px; height: 165px; }
+.resource-F4 { background: url('resources.png') -825px -495px; width: 165px; height: 165px; }
+.resource-F5 { background: url('resources.png') -825px -660px; width: 165px; height: 165px; }
+.resource-F6 { background: url('resources.png') -825px -825px; width: 165px; height: 165px; }
+
+.inventory-item {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    overflow: hidden; /* Ensures the inner div doesn't exceed the outer div's boundaries */
+
+}
+
+.inventory-item div {
+    transform: scale(0.3878); /* Scale down to fit 80x80 (80/165) */
+    transform-origin: top left;
+} 

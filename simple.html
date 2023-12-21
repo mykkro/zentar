@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asteroid Miner</title>
-    <!-- Include jQuery library from a CDN (Content Delivery Network) -->
+    <link rel="stylesheet" type="text/css" href="media/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -28,12 +28,33 @@
             <span><strong>Game Over:</strong></span>
             <span id="gameOver">false</span>
         </div>
+        <div id="inventory"></div>
     </div>
-
         
     <script>        
 
         const GAME_TIMEOUT = 1000
+
+        const klass_map = {
+            "Iron Ore": "resource-E6",
+            "Gold Ore": "resource-A1",
+            "Diamond": "resource-E3"
+        }
+
+        class ObjectWithDuration {
+            constructor(name, duration) {
+                this.duration = duration;
+                this.name = name;
+            }
+
+            update() {
+                this.duration--;
+            }
+
+            isAlive() {
+                return this.duration > 0;
+            }
+        }
 
         class Game {
             constructor() {
@@ -50,6 +71,8 @@
                     downArrow: false,
                     p: false
                 };
+                this.objects = [];
+                this.inventory = [];
             }
 
             start() {
@@ -78,6 +101,53 @@
                 this.updateScore();
             }
 
+            spawnObjects() {
+                // 10% probability of spawning Iron Ore
+                // duration (in time): 5 sesonds (50 ticks)
+                if(Math.random() < 0.1) {
+                    this.objects.push(new ObjectWithDuration("Iron Ore", 20));
+                }
+                if(Math.random() < 0.03) {
+                    this.objects.push(new ObjectWithDuration("Gold Ore", 15));
+                }
+                if(Math.random() < 0.01) {
+                    this.objects.push(new ObjectWithDuration("Diamond", 10));
+                }
+            }
+
+            updatePlayer() {
+                // the player has 1/32 chance of grabbing object in its vicinity...
+                var grabbed = [];
+                var remaining = [];
+                this.objects.forEach(obj => {
+                    if (Math.random() < (1.0/32)) {
+                        grabbed.push(obj.name);
+                    } else {
+                        remaining.push(obj);
+                    }
+                });
+                this.objects = remaining;
+                this.inventory.push(...grabbed)
+
+                // update inventory
+                $("#inventory").empty();
+                this.inventory.forEach(item => {
+                    $("#inventory").append(`<div class="inventory-item"><div class="${klass_map[item]}"></div></div>`);
+                });
+            }
+
+            updateObjects() {
+                var objs = [];
+                this.objects.forEach(obj => {
+                    obj.update();
+                    if (obj.isAlive()) {
+                        objs.push(obj);
+                    }
+                });
+                this.objects = objs;
+                this.spawnObjects();
+            }
+
             incrementTime() {
                 this.time++;
                 this.updateTime();
@@ -99,7 +169,9 @@
                 setTimeout(() => runGameLoop(game), 100);
                 return;
             }
-            console.log("Time: " + game.time);
+            console.log("Time: " + game.time, 'Objects:', game.objects.length, "Inventory:", game.inventory);
+            game.updatePlayer();
+            game.updateObjects();
             game.incrementTime();
             game.updateTime();
 
