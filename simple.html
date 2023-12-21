@@ -73,6 +73,7 @@
                 };
                 this.objects = [];
                 this.inventory = [];
+                this.inventoryMaxSize = 20;
             }
 
             start() {
@@ -127,7 +128,14 @@
                     }
                 });
                 this.objects = remaining;
-                this.inventory.push(...grabbed)
+                var i = 0;
+                while(this.inventory.length < this.inventoryMaxSize && i < grabbed.length) {
+                    this.inventory.push(grabbed[i]);
+                    i += 1;
+                }
+                if (i < grabbed.length) {
+                    console.log("Inventory full!");
+                }
 
                 // update inventory
                 $("#inventory").empty();
@@ -169,7 +177,7 @@
                 setTimeout(() => runGameLoop(game), 100);
                 return;
             }
-            console.log("Time: " + game.time, 'Objects:', game.objects.length, "Inventory:", game.inventory);
+            console.log("Time: " + game.time, 'Objects:', game.objects.length);
             game.updatePlayer();
             game.updateObjects();
             game.incrementTime();
