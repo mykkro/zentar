@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asteroid Miner</title>
+    <!-- Include jQuery library from a CDN (Content Delivery Network) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Asteroid Miner</h1>
+
+    <!-- Your jQuery code can go here -->
+
+    <!-- Example: Change text color on button click -->
+    <button id="changeColorButton">Change Text Color</button>
+
+    <div id="game">
+        <div>
+            <span><strong>Score:</strong></span>
+            <span id="score">0</span>
+        </div>
+        <div>
+            <span><strong>Time:</strong></span>
+            <span id="time">0</span>
+        </div>
+        <div>
+            <span><strong>Game Over:</strong></span>
+            <span id="gameOver">false</span>
+        </div>
+    </div>
+
+        
+    <script>        
+
+        const GAME_TIMEOUT = 1000
+
+        class Game {
+            constructor() {
+                this.score = 0;
+                this.time = 0;
+                this.gameOver = false;
+                this.paused = false;
+                this.keys = {
+                    enter: false,
+                    escape: false,
+                    leftArrow: false,
+                    rightArrow: false,
+                    upArrow: false,
+                    downArrow: false,
+                    p: false
+                };
+            }
+
+            start() {
+                this.gameOver = false;
+                this.score = 0;
+                this.time = 0;
+                this.updateScore();
+                this.updateTime();
+                this.updateGameOver();
+            }
+
+            updateScore() {
+                $("#score").text(this.score);
+            }
+
+            updateTime() {
+                $("#time").text(this.time);
+            }
+
+            updateGameOver() {
+                $("#gameOver").text(this.gameOver);
+            }
+
+            incrementScore() {
+                this.score++;
+                this.updateScore();
+            }
+
+            incrementTime() {
+                this.time++;
+                this.updateTime();
+            }
+
+            endGame() {
+                this.gameOver = true;
+                this.updateGameOver();
+            }
+        }
+
+        function runGameLoop(game) {
+            if (game.keys.p) {
+                // Handle Enter key
+                this.paused = !this.paused;
+            }
+            if(this.paused) {
+                // skip...
+                setTimeout(() => runGameLoop(game), 100);
+                return;
+            }
+            console.log("Time: " + game.time);
+            game.incrementTime();
+            game.updateTime();
+
+            // Check key states
+            if (game.keys.enter) {
+                // Handle Enter key
+                console.log("Enter");
+            }
+            if (game.keys.escape) {
+                return;
+            }
+            if (game.keys.leftArrow) {
+                // Handle left arrow key
+            }
+            if (game.keys.rightArrow) {
+                // Handle right arrow key
+            }
+            if (game.keys.upArrow) {
+                // Handle up arrow key
+            }
+            if (game.keys.downArrow) {
+                // Handle down arrow key
+            }            
+            if (game.time > GAME_TIMEOUT) {
+                game.endGame();
+            }
+
+            if (!game.gameOver) {
+                //requestAnimationFrame(() => runGameLoop(game)); // Use requestAnimationFrame for smoother animation
+                setTimeout(() => runGameLoop(game), 100);
+            } else {
+                console.log("Game over");
+            }
+        }        
+
+        function handleKeyDown(event, game) {
+            console.log("key down:", event.key)
+            if (event.key === "Enter") {
+                game.keys.enter = true;
+            } else if (event.key === "p") {
+                game.keys.p = true;
+            } else if (event.key === "Escape") {
+                game.keys.escape = true;
+            } else if (event.key === "ArrowLeft") {
+                game.keys.leftArrow = true;
+            } else if (event.key === "ArrowRight") {
+                game.keys.rightArrow = true;
+            } else if (event.key === "ArrowUp") {
+                game.keys.upArrow = true;
+            } else if (event.key === "ArrowDown") {
+                game.keys.downArrow = true;
+            }
+        }
+
+        function handleKeyUp(event, game) {
+            if (event.key === "Enter") {
+                game.keys.enter = false;
+            } else if (event.key === "p") {
+                game.keys.p = false;
+            } else if (event.key === "Escape") {
+                game.keys.escape = false;
+            } else if (event.key === "ArrowLeft") {
+                game.keys.leftArrow = false;
+            } else if (event.key === "ArrowRight") {
+                game.keys.rightArrow = false;
+            } else if (event.key === "ArrowUp") {
+                game.keys.upArrow = false;
+            } else if (event.key === "ArrowDown") {
+                game.keys.downArrow = false;
+            }
+        }
+
+        $(document).ready(function(){
+            // jQuery code can be placed here
+            $("#changeColorButton").click(function(){
+                $("h1").css("color", "blue");
+            });
+
+            console.log("hello!");
+
+            // your game here...
+            const game = new Game();
+            console.log('Game created!', game)
+
+            // Add event listeners for keydown and keyup
+            document.addEventListener("keydown", (event) => handleKeyDown(event, game));
+            document.addEventListener("keyup", (event) => handleKeyUp(event, game));
+
+            // Start the game loop
+            runGameLoop(game);
+        });
+    </script>
+</body>
+</html>
+
+

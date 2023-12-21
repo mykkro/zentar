@@ -1,0 +1,377 @@
+- crafting: []
+  name: small_water_bottle
+  title: Small Water Bottle
+- crafting:
+  - items:
+    - name: potato
+      quantity: 1
+    stations:
+    - workbench
+  name: potato
+  title: Potato
+- crafting: []
+  name: baked_potato
+  title: Baked Potato
+- crafting:
+  - items:
+    - name: wood_stick
+      quantity: 1
+    - name: iron_ingot
+      quantity: 1
+    stations:
+    - workbench
+  - items:
+    - name: wood_stick
+      quantity: 1
+    - name: iron_ingot
+      quantity: 1
+    stations:
+    - workbench
+  name: wood_stick
+  title: Wood Stick
+- crafting: []
+  name: flint_n_steel
+  title: Flint'n'Steel
+- crafting:
+  - items:
+    - name: flint
+      quantity: 1
+    stations:
+    - workbench
+  name: flint
+  title: Flint
+- crafting:
+  - items:
+    - name: raw_iron
+      quantity: 1
+    stations:
+    - workbench
+  name: raw_iron
+  title: Raw Iron
+- crafting:
+  - items:
+    - name: iron_ingot
+      quantity: 1
+    - name: wood_stick
+      quantity: 2
+    stations:
+    - workbench
+  - items:
+    - name: iron_ingot
+      quantity: 1
+    - name: wood_stick
+      quantity: 2
+    stations:
+    - workbench
+  name: iron_ingot
+  title: Iron Ingot
+- crafting: []
+  name: fireplace
+  title: Fireplace
+- crafting:
+  - items:
+    - name: wood_log
+      quantity: 1
+    stations:
+    - workbench
+  - items:
+    - name: wood_log
+      quantity: 1
+    stations:
+    - workbench
+  name: wood_log
+  title: Wood Log
+- crafting: []
+  name: hand_saw
+  title: Hand Saw
+- crafting:
+  - items:
+    - name: wood_plank
+      quantity: 1
+    stations:
+    - workbench
+  - items:
+    - name: wood_plank
+      quantity: 1
+    stations:
+    - workbench
+  name: wood_plank
+  title: Wood Plank
+- crafting:
+  - items:
+    - name: fur
+      quantity: 1
+    stations:
+    - workbench
+  - items:
+    - name: fur
+      quantity: 1
+    stations:
+    - workbench
+  - items:
+    - name: fur
+      quantity: 1
+    stations:
+    - workbench
+  name: fur
+  title: Fur
+- crafting: []
+  name: fur_sword
+  title: Fur Sword
+- crafting: []
+  name: fur_helmet
+  title: Fur Helmet
+- crafting: []
+  name: fur_sword_1
+  title: Fur Sword +1
+- crafting: []
+  name: fur_coat
+  title: Fur Coat
+- crafting: []
+  name: healing_kit
+  title: Healing Kit
+- crafting: []
+  name: wodka_tabletnaya
+  title: Wodka Tabletnaya
+- crafting:
+  - items:
+    - name: empty_bottle
+      quantity: 1
+    stations:
+    - workbench
+  - items:
+    - name: empty_bottle
+      quantity: 1
+    stations:
+    - workbench
+  name: empty_bottle
+  title: Empty Bottle
+- crafting: []
+  name: bottle_of_wodka
+  title: Bottle of Wodka
+- crafting:
+  - items:
+    - name: cloth
+      quantity: 1
+    stations:
+    - workbench
+  - items:
+    - name: cloth
+      quantity: 1
+    stations:
+    - workbench
+  - items:
+    - name: cloth
+      quantity: 1
+    stations:
+    - workbench
+  name: cloth
+  title: Cloth
+- crafting: []
+  name: small_tent
+  title: Small Tent
+- crafting: []
+  name: medium_tent
+  title: Medium Tent
+- crafting: []
+  name: large_tent
+  title: Large Tent
+- crafting: []
+  name: small_wooden_chest
+  title: Small Wooden Chest
+- crafting: []
+  name: wooden_chest
+  title: Wooden Chest
+- crafting:
+  - items:
+    - name: ice_shard
+      quantity: 1
+    stations:
+    - workbench
+  name: ice_shard
+  title: Ice Shard
+- crafting: []
+  name: snow_ball
+  title: Snow Ball
+- crafting: []
+  name: shovel
+  title: Shovel
+- crafting: []
+  name: pickaxe
+  title: Pickaxe
+- crafting:
+  - items:
+    - name: raw_gold
+      quantity: 1
+    stations:
+    - workbench
+  name: raw_gold
+  title: Raw Gold
+- crafting: []
+  name: gold_ingot
+  title: Gold Ingot
+- crafting: []
+  name: wooden_sword
+  title: Wooden Sword
+- crafting: []
+  name: wooden_axe
+  title: Wooden Axe
+- crafting:
+  - items:
+    - name: raw_copper
+      quantity: 1
+    stations:
+    - workbench
+  name: raw_copper
+  title: Raw Copper
+- crafting:
+  - items:
+    - name: copper_ingot
+      quantity: 1
+    - name: tin_ingot
+      quantity: 1
+    stations:
+    - workbench
+  name: copper_ingot
+  title: Copper Ingot
+- crafting: []
+  name: bronze_ingot
+  title: Bronze Ingot
+- crafting: []
+  name: bronze_sword
+  title: Bronze Sword
+- crafting: []
+  name: raw_ulerite
+  title: Raw Ulerite
+- crafting:
+  - items:
+    - name: ulerium_ingot
+      quantity: 1
+    - name: circuitry
+      quantity: 1
+    - name: wire
+      quantity: 2
+    - name: ion_cube
+      quantity: 3
+    stations:
+    - workbench
+  name: ulerium_ingot
+  title: Ulerium Ingot
+- crafting: []
+  name: wormhole_generator
+  title: Wormhole Generator
+- crafting: []
+  name: ulerium_sword
+  title: Ulerium Sword
+- crafting: []
+  name: signpost
+  title: Signpost
+- crafting: []
+  name: chicken_vindaloo
+  title: Chicken Vindaloo
+- crafting: []
+  name: gazpacho_soup
+  title: Gazpacho Soup
+- crafting: []
+  name: workbench
+  title: Workbench
+- crafting: []
+  name: cooker
+  title: Cooker
+- crafting: []
+  name: smelter
+  title: Smelter
+- crafting: []
+  name: sodastream_fountain
+  title: SodaStream Fountain
+- crafting: []
+  name: dead_rat
+  title: Dead Rat
+- crafting: []
+  name: coconut_dollar
+  title: Coconut Dollar
+- crafting: []
+  name: gold_coin
+  title: Gold Coin
+- crafting: []
+  name: copper_coin
+  title: Copper Coin
+- crafting: []
+  name: hand_bullshitter
+  title: Hand Bullshitter
+- crafting:
+  - items:
+    - name: raw_fotrite
+      quantity: 1
+    stations:
+    - workbench
+  name: raw_fotrite
+  title: Raw Fotrite
+- crafting:
+  - items:
+    - name: fotrite_ingot
+      quantity: 1
+    - name: wood_stick
+      quantity: 2
+    stations:
+    - workbench
+  - items:
+    - name: fotrite_ingot
+      quantity: 1
+    - name: wood_stick
+      quantity: 2
+    stations:
+    - workbench
+  name: fotrite_ingot
+  title: Fotrite Ingot
+- crafting: []
+  name: ultralax_3000
+  title: UltraLax 3000
+- crafting: []
+  name: wire
+  title: Wire
+- crafting: []
+  name: circuitry
+  title: Circuitry
+- crafting: []
+  name: raw_silver
+  title: Raw Silver
+- crafting: []
+  name: silver_ingot
+  title: Silver Ingot
+- crafting: []
+  name: sonic_screwdriver
+  title: Sonic Screwdriver
+- crafting: []
+  name: expensive_crap
+  title: Expensive Crap
+- crafting: []
+  name: apple
+  title: Apple
+- crafting: []
+  name: joint
+  title: Joint
+- crafting: []
+  name: happy_mushroom
+  title: Happy Mushroom
+- crafting: []
+  name: chicken_egg
+  title: Chicken Egg
+- crafting: []
+  name: talking_toaster
+  title: Talking Toaster
+- crafting: []
+  name: battery
+  title: Battery
+- crafting: []
+  name: ion_cube
+  title: Ion Cube
+- crafting: []
+  name: ion_shard
+  title: Ion Shard
+- crafting: []
+  name: wild_mushroom
+  title: Wild Mushroom
+- crafting: []
+  name: torch
+  title: Torch
