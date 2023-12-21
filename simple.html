@@ -319,7 +319,8 @@ var starField = new StarField('fullScreen').render(333, 3);
         }
 
         class CraftingRecipe {
-            constructor(name, ingredients, resulting_quantity) {
+            constructor(key, name, ingredients, resulting_quantity) {
+                this.key = key;
                 this.name = name;
                 this.ingredients = ingredients;
                 this.resulting_quantity = resulting_quantity;
@@ -334,10 +335,10 @@ var starField = new StarField('fullScreen').render(333, 3);
         }
 
         const recipes = {
-            "Iron Bar": new CraftingRecipe("Iron Bar", [new ObjectWithQuantity("Iron Ore", 2)], 1),
-            "Iron Plate": new CraftingRecipe("Iron Plate", [new ObjectWithQuantity("Iron Ore", 1)], 1),
-            "Gold Bar": new CraftingRecipe("Gold Bar", [new ObjectWithQuantity("Gold Ore", 2)], 1),
-            "Wire": new CraftingRecipe("Wire", [new ObjectWithQuantity("Redball", 1)], 2),
+            "Iron Bar": new CraftingRecipe("iron_bar", "Iron Bar", [new ObjectWithQuantity("Iron Ore", 2)], 1),
+            "Iron Plate": new CraftingRecipe("iron_plate", "Iron Plate", [new ObjectWithQuantity("Iron Ore", 1)], 1),
+            "Gold Bar": new CraftingRecipe("gold_bar", "Gold Bar", [new ObjectWithQuantity("Gold Ore", 2)], 1),
+            "Wire": new CraftingRecipe("wire", "Wire", [new ObjectWithQuantity("Redball", 1)], 2),
         }
 
 
@@ -390,7 +391,8 @@ var starField = new StarField('fullScreen').render(333, 3);
                 };
                 this.objects = [];
                 this.inventory = [];
-                this.inventoryMaxSize = 35;
+                this.inventoryMaxSize = 40;
+                this.craftables = [];
             }
 
             inventoryWithQuantities() {
@@ -526,10 +528,50 @@ var starField = new StarField('fullScreen').render(333, 3);
                 // update crafting recipes
                 var craftables = this.findUsableRecipes();
                 console.log("Craftables:", craftables);
-                $("#crafting").empty();
-                craftables.forEach(recipe => {
-                    $("#crafting").append(`<div class="crafting-item" title="${recipe.name}"><div class="${klass_map[recipe.name]}"></div><span>${recipe.resulting_quantity}</span></div>`);
+                var activeCraftingIds = craftables.map(item => item.key);
+                $("#crafting").children().each((index, elem) => {
+                    var id = elem.id.split("-")[1];
+                    if (!activeCraftingIds.includes(id)) {
+                        $(elem).remove();
+                    }
                 });
+                craftables.forEach(recipe => {
+                    var elem = $(`#crafting-${recipe.key}`);
+                    if(elem.length == 0) {
+                        elem = $(`<div class="crafting-item" title="${recipe.name}" id="crafting-${recipe.key}"><div class="${klass_map[recipe.name]}"></div><span>${recipe.resulting_quantity}</span></div>`);
+                        elem.click(() => {
+                            console.log("clicked on", recipe.name, recipe.key);
+                            this.craft(recipe);
+                        })
+                        $("#crafting").append(elem);
+                        this.craftables.push(recipe);
+                    }
+                });
+            }
+
+            craft(recipe) {
+                //alert("crafting! " + recipe.key);
+                var ingr = recipe.ingredients;
+                var iq = this.inventoryWithQuantities();
+                if(!this.canCraft(iq, recipe)) {
+                    alert("Cannot craft " + recipe.name);
+                    return;
+                }
+                // remove ingredients...
+                ingr.forEach(ingredient => {
+                    for(var i=0; i<ingredient.quantity; i++) {
+                        for(var j=0; j<this.inventory.length; j++) {
+                            if (this.inventory[j].name === ingredient.name && !this.inventory[j].markedForRemoval) {
+                                this.inventory[j].markedForRemoval = true;
+                            }
+                        }
+                    }
+                });
+                // add result...
+                for(var i=0; i<recipe.resulting_quantity; i++) {
+                    this.inventory.push(new InventoryItem(recipe.name));
+                }
+                
             }
 
             updateObjects() {
