@@ -299,7 +299,41 @@ StarField.prototype.render = function(numStars, maxStarSpeed) {
 }());
 
 // Kick off!
-var starField = new StarField('fullScreen').render(333, 3);
+var starField = new StarField('fullScreen').render(500, 10);
+
+    class SoundPlayer {
+        constructor(maxSimultaneousSounds = 5) {
+            this.soundPool = [];
+            this.maxSimultaneousSounds = maxSimultaneousSounds;
+        }
+
+        playSound(src, volume = 0.1) {
+        let sound = this.getAvailableSound();
+        if (!sound) {
+            if (this.soundPool.length < this.maxSimultaneousSounds) {
+                sound = new Audio();
+                this.soundPool.push(sound);
+            } else {
+                return;
+            }
+        }
+
+        sound.src = src;
+        sound.volume = volume; // Set the volume to 50%
+        sound.play();
+    }
+
+        getAvailableSound() {
+            for (let sound of this.soundPool) {
+                if (sound.ended || sound.paused) {
+                    return sound;
+                }
+            }
+            return null;
+        }
+    }
+
+    const soundPlayer = new SoundPlayer();
 
         const GAME_TIMEOUT = 1000
 
@@ -563,6 +597,7 @@ var starField = new StarField('fullScreen').render(333, 3);
                         for(var j=0; j<this.inventory.length; j++) {
                             if (this.inventory[j].name === ingredient.name && !this.inventory[j].markedForRemoval) {
                                 this.inventory[j].markedForRemoval = true;
+                                break;
                             }
                         }
                     }
@@ -571,6 +606,7 @@ var starField = new StarField('fullScreen').render(333, 3);
                 for(var i=0; i<recipe.resulting_quantity; i++) {
                     this.inventory.push(new InventoryItem(recipe.name));
                 }
+                soundPlayer.playSound("media/blip-131856.mp3");
                 
             }
 
