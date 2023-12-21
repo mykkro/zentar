@@ -29,6 +29,11 @@
 
         </div>
 
+        <h2>Machines</h2>
+        <div id="machines">
+
+        </div>
+
     </div>
     </div>
     </div>    
@@ -350,6 +355,7 @@ var starField = new StarField('fullScreen').render(500, 10);
             "Iron Plate": "resource-B5",
             "Gold Bar": "resource-F6",
             "Wire": "resource-D2",
+            "Reactor": "resource-D6",
 
         }
 
@@ -374,6 +380,7 @@ var starField = new StarField('fullScreen').render(500, 10);
             "Iron Plate": new CraftingRecipe("iron_plate", "Iron Plate", [new ObjectWithQuantity("Iron Ore", 1)], 1),
             "Gold Bar": new CraftingRecipe("gold_bar", "Gold Bar", [new ObjectWithQuantity("Gold Ore", 2)], 1),
             "Wire": new CraftingRecipe("wire", "Wire", [new ObjectWithQuantity("Redball", 1)], 2),
+            "Reactor": new CraftingRecipe("reactor", "Reactor", [new ObjectWithQuantity("Ulerite", 1), new ObjectWithQuantity("Diamond", 2), new ObjectWithQuantity("Iron Bar", 5)], 1),
         }
 
         // prices of individual objects in cosmic dollars.
@@ -384,11 +391,16 @@ var starField = new StarField('fullScreen').render(500, 10);
             "Ulerite": 1000,
             "Redball": 2,
             "Sunstone": 200,
+            "Reactor": 10000,
 
             "Iron Bar": 10,
             "Iron Plate": 5,
             "Gold Bar": 100,
             "Wire": 5,
+        }
+
+        const machines = {
+            "Reactor": "Reactor",
         }
 
 
@@ -443,6 +455,7 @@ var starField = new StarField('fullScreen').render(500, 10);
                 this.inventory = [];
                 this.inventoryMaxSize = 40;
                 this.craftables = [];
+                this.machines = [];
 
                 $("#dump-inventory").click(() => {
                     this.inventory = [];
@@ -592,6 +605,12 @@ var starField = new StarField('fullScreen').render(500, 10);
                 var inventoryValue = this.calculateInventoryValue();
                 $("#inventory-value").text(inventoryValue+"");
 
+                // update machine list
+                $("#machines").empty();
+                this.machines.forEach(item => {
+                    $("#machines").append(`<div class="machine-item" title="${item.name}"><div class="${klass_map[item.name]}"></div></div>`);
+                });
+
                 // update crafting recipes
                 var craftables = this.findUsableRecipes();
                 console.log("Craftables:", craftables);
@@ -638,7 +657,12 @@ var starField = new StarField('fullScreen').render(500, 10);
                 });
                 // add result...
                 for(var i=0; i<recipe.resulting_quantity; i++) {
-                    this.inventory.push(new InventoryItem(recipe.name));
+                    var newItem = new InventoryItem(recipe.name);
+                    if(recipe.name in machines) {
+                        this.machines.push(newItem);
+                    } else {
+                        this.inventory.push(newItem);
+                    }
                 }
                 soundPlayer.playSound("media/blip-131856.mp3");                
                 

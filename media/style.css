@@ -54,7 +54,7 @@ body {
 .resource-F5 { background: url('resources.png') -825px -660px; width: 165px; height: 165px; }
 .resource-F6 { background: url('resources.png') -825px -825px; width: 165px; height: 165px; }
 
-.inventory-item, .incoming-item, .crafting-item {
+.inventory-item, .incoming-item, .crafting-item, .machine-item {
     position: relative;
     display: inline-block;
     width: 80px;
@@ -62,7 +62,7 @@ body {
     overflow: hidden; /* Ensures the inner div doesn't exceed the outer div's boundaries */
 }
 
-.inventory-item div, .incoming-item div, .crafting-item div {
+.inventory-item div, .incoming-item div, .crafting-item div, .machine-item div {
     transform: scale(0.4848); /* Scale down to fit 80x80 (80/165) */
     transform-origin: top left;
 } 

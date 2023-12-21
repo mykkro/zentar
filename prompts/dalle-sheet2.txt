@@ -1,0 +1,5 @@
+Create sheet with 64 (8x8) square images of various video game assets, like: 
+iron ore, pickaxe, screwdriver, diamond, processing unit, iron plate, iron rod, 
+wood stick, apple, water bottle, motor, ion cube, aluminium, small machines and similarly themed objects. 
+Use vivid comics style. Let each of the tiles have white margin of 5 pixels.
+Use global theme: space, robots, aliens. Use cyberpunk / lsd style. Tell me the GenIds of generated images.
