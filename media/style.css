@@ -40,15 +40,14 @@
 .resource-F5 { background: url('resources.png') -825px -660px; width: 165px; height: 165px; }
 .resource-F6 { background: url('resources.png') -825px -825px; width: 165px; height: 165px; }
 
-.inventory-item {
+.inventory-item, .incoming-item {
     display: inline-block;
     width: 64px;
     height: 64px;
     overflow: hidden; /* Ensures the inner div doesn't exceed the outer div's boundaries */
-
 }
 
-.inventory-item div {
+.inventory-item div, .incoming-item div {
     transform: scale(0.3878); /* Scale down to fit 80x80 (80/165) */
     transform-origin: top left;
 } 

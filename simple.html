@@ -28,7 +28,13 @@
             <span><strong>Game Over:</strong></span>
             <span id="gameOver">false</span>
         </div>
-        <div id="inventory"></div>
+        <h2>Incoming Objects</h2>
+        <div id="objects">
+            </div>
+        <h2>Inventory</h2>
+        <div id="inventory">
+
+        </div>
     </div>
         
     <script>        
@@ -38,13 +44,21 @@
         const klass_map = {
             "Iron Ore": "resource-E6",
             "Gold Ore": "resource-A1",
-            "Diamond": "resource-E3"
+            "Diamond": "resource-E3",
+            "Ulerite": "resource-F1",
+            "Redball": "resource-A2",
+            "Sunstone": "resource-E4"
         }
 
         class ObjectWithDuration {
             constructor(name, duration) {
                 this.duration = duration;
+                this.max_duration = duration;
                 this.name = name;
+            }
+
+            progress() {
+                return (this.max_duration - this.duration) / this.max_duration;
             }
 
             update() {
@@ -73,7 +87,7 @@
                 };
                 this.objects = [];
                 this.inventory = [];
-                this.inventoryMaxSize = 20;
+                this.inventoryMaxSize = 35;
             }
 
             start() {
@@ -113,6 +127,15 @@
                 }
                 if(Math.random() < 0.01) {
                     this.objects.push(new ObjectWithDuration("Diamond", 10));
+                }
+                if(Math.random() < 0.01) {
+                    this.objects.push(new ObjectWithDuration("Ulerite", 10));
+                }
+                if(Math.random() < 0.01) {
+                    this.objects.push(new ObjectWithDuration("Redball", 10));
+                }
+                if(Math.random() < 0.01) {
+                    this.objects.push(new ObjectWithDuration("Sunstone", 10));
                 }
             }
 
@@ -154,6 +177,12 @@
                 });
                 this.objects = objs;
                 this.spawnObjects();
+
+                // update display of objects
+                $("#objects").empty();
+                this.objects.forEach(item => {
+                    $("#objects").append(`<div class="incoming-item" style="opacity: ${1.0-item.progress()};"><div class="${klass_map[item.name]}"></div></div>`);
+                });
             }
 
             incrementTime() {
