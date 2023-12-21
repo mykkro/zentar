@@ -69,6 +69,18 @@
         }
 
 
+        class InventoryItem {
+            constructor(name) {
+                this.name = name;
+                this.id = generateUniqueId();
+                this.markedForRemoval = false;
+            }
+        }
+
+        const generateUniqueId = () => {
+            return Math.random().toString(36).substr(2, 9);
+        }
+
         class ObjectWithDuration {
             constructor(name, duration) {
                 this.duration = duration;
@@ -112,10 +124,10 @@
             inventoryWithQuantities() {
                 var inventory = {};
                 this.inventory.forEach(item => {
-                    if (inventory[item]) {
-                        inventory[item].quantity += 1;
+                    if (inventory[item.name]) {
+                        inventory[item.name].quantity += 1;
                     } else {
-                        inventory[item] = new ObjectWithQuantity(item, 1);
+                        inventory[item.name] = new ObjectWithQuantity(item.name, 1);
                     }
                 });
                 return inventory;
@@ -206,7 +218,7 @@
                 this.objects = remaining;
                 var i = 0;
                 while(this.inventory.length < this.inventoryMaxSize && i < grabbed.length) {
-                    this.inventory.push(grabbed[i]);
+                    this.inventory.push(new InventoryItem(grabbed[i]));
                     i += 1;
                 }
                 if (i < grabbed.length) {
@@ -214,9 +226,29 @@
                 }
 
                 // update inventory
-                $("#inventory").empty();
+                this.inventory = this.inventory.filter(item => !item.markedForRemoval);
+                var activeInventoryIds = this.inventory.map(item => item.id);
+                $("#inventory").children().each((index, elem) => {
+                    var id = elem.id.split("-")[1];
+                    if (!activeInventoryIds.includes(id)) {
+                        $(elem).remove();
+                    }
+                });
                 this.inventory.forEach(item => {
-                    $("#inventory").append(`<div class="inventory-item" title="${item}"><div class="${klass_map[item]}"></div></div>`);
+                    var elem = $(`#inventory-${item.id}`);
+                    if(elem.length == 0) {
+                        elem = $(`<div class="inventory-item" title="${item.name}" id="inventory-${item.id}"><div class="${klass_map[item.name]}"></div></div>`);
+                        $("#inventory").append(elem);
+                        elem.click(() => {
+                            console.log("clicked on", item.name, item.id);
+                            for(var i=0; i<this.inventory.length; i++) {
+                                if (this.inventory[i].id === item.id) {
+                                    this.inventory[i].markedForRemoval = true;
+                                    break;
+                                }
+                            }
+                        });
+                    }
                 });
 
                 // update crafting recipes
