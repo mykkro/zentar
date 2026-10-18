@@ -1,1 +1,0 @@
-Create sheet with 36 (6x6) square images of variousgame assets, like: iron ore, pickaxe, screwwdriver, diamond, processing unit, iron plate, iron rod, wood stick, apple, water bottle, motor and similarly themed objects. Use vivid comics style. Let the generated image have margin border of white color and 10 pixels.
