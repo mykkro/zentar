@@ -80,38 +80,6 @@ sheet, sound effects, starfield source and new SVG illustrations. Repository
 prompts suggest the resource sheet was AI-generated, but its exact origin
 is not confirmed. No artist name or license has been invented for it.
 
-## Ulerium: the spiritual precursor
-
-The earlier `ulerium/index.html` prototype in the parent collection supplies
-Zentar's Ulerium/Craponite vocabulary, its eccentric space-travel ambitions and
-its playful tone. Its notes propose converting Craponite to Ulerium, exploring
-with ships, handling unstable resources, and encountering pirates, Fotron
-radiation, Caopectat and Gutalax. The final ambition was cosmic destruction.
-
-Zentar reuses that precursor in a contained escape campaign:
-
-- **Craponite** is a common raw resource, available from mining or targeted
-  recovery. Protect quest cargo reserves up to ten units; surplus can be sold.
-- **Synthesize Ulerium** is an optional Refinery recipe after survey 2:
-  ten Craponite + 20 energy -> one Ulerium Ingot in eight seconds. The existing
-  two-Ulerite recipe remains faster and cheaper in energy.
-- TOAST-9 references the old prospectors; the relay recalls Sputnik and
-  Caopectat, and the quiet corridor avoids pirate/Fotron trouble.
-- Ship & log contains recovered precursor lore. The ending explicitly leaves
-  the universe intact. The goal is escape, not a second universe-destruction quest.
-
-Bacquelitte, Bullshit Crystals, gambling, deities and larger-scale exploration
-remain background ideas rather than additional crafting gates. Pirates and
-radiation are narrative references, not implemented combat or timed hazards.
-
-The welcome briefing explains the escape mission and offers New game or
-Continue voyage when a save exists. Simulation waits for your choice and
-does not replace a save while you read. Mission briefing reopens this screen
-during play. Starting over asks before replacing unfinished progress.
-
-Screenshots live in `docs/screenshots/`, simulation checks in `tests/`,
-and provenance prompts in `prompts/`. The root contains the current web app.
-
 ## Languages
 
 Use the Czech/English switch on the welcome screen or in the ship header.
