@@ -1,132 +1,1289 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
+html,
 body {
-    color: #ffffff;
-    /* font-family: 'Roboto', sans-serif; */
-    font-family: 'Orbitron', sans-serif;
-
-    font-size: 16px;
-
-    user-select: none;
-
-    padding: 16px;
+  overflow: hidden;
+  background: #000;
+  color: #ffffff;
+  font-family: "Orbitron", sans-serif;
+  font-size: 15px;
+  user-select: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.resource-A1 { background: url('resources.png') 0px 0px; width: 165px; height: 165px; }
-.resource-A2 { background: url('resources.png') 0px -165px; width: 165px; height: 165px; }
-.resource-A3 { background: url('resources.png') 0px -330px; width: 165px; height: 165px; }
-.resource-A4 { background: url('resources.png') 0px -495px; width: 165px; height: 165px; }
-.resource-A5 { background: url('resources.png') 0px -660px; width: 165px; height: 165px; }
-.resource-A6 { background: url('resources.png') 0px -825px; width: 165px; height: 165px; }
-
-.resource-B1 { background: url('resources.png') -165px 0px; width: 165px; height: 165px; }
-.resource-B2 { background: url('resources.png') -165px -165px; width: 165px; height: 165px; }
-.resource-B3 { background: url('resources.png') -165px -330px; width: 165px; height: 165px; }
-.resource-B4 { background: url('resources.png') -165px -495px; width: 165px; height: 165px; }
-.resource-B5 { background: url('resources.png') -165px -660px; width: 165px; height: 165px; }
-.resource-B6 { background: url('resources.png') -165px -825px; width: 165px; height: 165px; }
-
-.resource-C1 { background: url('resources.png') -330px 0px; width: 165px; height: 165px; }
-.resource-C2 { background: url('resources.png') -330px -165px; width: 165px; height: 165px; }
-.resource-C3 { background: url('resources.png') -330px -330px; width: 165px; height: 165px; }
-.resource-C4 { background: url('resources.png') -330px -495px; width: 165px; height: 165px; }
-.resource-C5 { background: url('resources.png') -330px -660px; width: 165px; height: 165px; }
-.resource-C6 { background: url('resources.png') -330px -825px; width: 165px; height: 165px; }
-
-.resource-D1 { background: url('resources.png') -495px 0px; width: 165px; height: 165px; }
-.resource-D2 { background: url('resources.png') -495px -165px; width: 165px; height: 165px; }
-.resource-D3 { background: url('resources.png') -495px -330px; width: 165px; height: 165px; }
-.resource-D4 { background: url('resources.png') -495px -495px; width: 165px; height: 165px; }
-.resource-D5 { background: url('resources.png') -495px -660px; width: 165px; height: 165px; }
-.resource-D6 { background: url('resources.png') -495px -825px; width: 165px; height: 165px; }
-
-.resource-E1 { background: url('resources.png') -660px 0px; width: 165px; height: 165px; }
-.resource-E2 { background: url('resources.png') -660px -165px; width: 165px; height: 165px; }
-.resource-E3 { background: url('resources.png') -660px -330px; width: 165px; height: 165px; }
-.resource-E4 { background: url('resources.png') -660px -495px; width: 165px; height: 165px; }
-.resource-E5 { background: url('resources.png') -660px -660px; width: 165px; height: 165px; }
-.resource-E6 { background: url('resources.png') -660px -825px; width: 165px; height: 165px; }
-
-.resource-F1 { background: url('resources.png') -825px 0px; width: 165px; height: 165px; }
-.resource-F2 { background: url('resources.png') -825px -165px; width: 165px; height: 165px; }
-.resource-F3 { background: url('resources.png') -825px -330px; width: 165px; height: 165px; }
-.resource-F4 { background: url('resources.png') -825px -495px; width: 165px; height: 165px; }
-.resource-F5 { background: url('resources.png') -825px -660px; width: 165px; height: 165px; }
-.resource-F6 { background: url('resources.png') -825px -825px; width: 165px; height: 165px; }
-
-.inventory-item, .incoming-item, .crafting-item, .machine-item {
-    position: relative;
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    overflow: hidden; /* Ensures the inner div doesn't exceed the outer div's boundaries */
+.fullScreen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
 }
 
-.inventory-item div, .incoming-item div, .crafting-item div, .machine-item div {
-    transform: scale(0.4848); /* Scale down to fit 80x80 (80/165) */
-    transform-origin: top left;
-} 
-
-.crafting-item span {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    font-weight: bold;
-    font-size: 16px;
+#canvas2d {
+  position: absolute;
+  inset: 0;
 }
 
-#inventory, #objects, #crafting {
-    width: 650px;
+/* Sprite sheet: 6x6 tiles, columns A-F, rows 1-6. Position is set inline. */
+.sprite {
+  background-image: url("resources.png");
+  background-size: 600% 600%;
+  border-radius: 12%;
 }
 
-#inventory {
-    height: 420px;
+/* ---- Side panel ---- */
+
+#panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 460px;
+  padding: 16px 20px;
+  overflow-y: auto;
+  background: rgba(5, 12, 22, 0.82);
+  border-right: 1px solid #1c4a66;
+  z-index: 2;
 }
 
-#objects {
-    min-height: 100px;
+h1 {
+  margin: 0 0 4px;
+  font-size: 26px;
+  color: #29b6f6;
+  text-shadow: 0 0 12px rgba(41, 182, 246, 0.6);
 }
 
-html, body { 
-    overflow: hidden; 
-    background: #000; 
-    padding: 16px; margin: 0px; 
-    width: 100%; height: 100%; 
-}
-.fullScreen { 
-    height: 100%; 
-    position: relative;
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 8px;
+  font-size: 15px;
+  color: #9fd8f7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-#game {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
+h2 .spacer {
+  flex: 1;
 }
+
+.stats {
+  display: flex;
+  gap: 18px;
+  font-size: 14px;
+  color: #cfe8f5;
+}
+
+.stats b {
+  color: #ffd54f;
+}
+
+.muted {
+  color: #6c8a9c;
+  font-size: 12px;
+}
+
+/* ---- Tiles (inventory + machines) ---- */
+
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 64px;
+}
+
+.tile {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.tile .count {
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-shadow:
+    0 0 3px #000,
+    0 0 3px #000;
+}
+
+#inventory .tile {
+  cursor: pointer;
+}
+
+#inventory .tile:hover {
+  filter: brightness(1.25);
+  outline: 1px solid #29b6f6;
+  border-radius: 12%;
+}
+
+/* ---- Crafting ---- */
+
+#crafting {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.recipe {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px;
+  border: 1px solid #1c4a66;
+  border-radius: 6px;
+  background: rgba(13, 31, 45, 0.7);
+  cursor: pointer;
+}
+
+.recipe .sprite {
+  flex: none;
+  width: 40px;
+  height: 40px;
+}
+
+.recipe .name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.recipe .ingredients {
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #9fb8c6;
+}
+
+.recipe .have {
+  color: #81c784;
+}
+.recipe .need {
+  color: #e57373;
+}
+
+.recipe.ready:hover {
+  border-color: #29b6f6;
+  box-shadow: 0 0 10px rgba(41, 182, 246, 0.5);
+}
+
+.recipe.locked {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.recipe .tag {
+  margin-left: auto;
+  font-size: 10px;
+  color: #ffd54f;
+  text-transform: uppercase;
+}
+
+footer {
+  margin-top: 18px;
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #6c8a9c;
+  line-height: 1.6;
+}
+
+/* ---- Asteroid field ---- */
+
+#field {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 460px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.rock {
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: crosshair;
+  will-change: transform, opacity;
+}
+
+.rock:hover {
+  filter: brightness(1.4) drop-shadow(0 0 8px #29b6f6);
+}
+
+.float {
+  position: absolute;
+  pointer-events: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffd54f;
+  text-shadow: 0 0 4px #000;
+  white-space: nowrap;
+  animation: floatUp 1s ease-out forwards;
+}
+
+.float.drone {
+  color: #81d4fa;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -40px);
+    opacity: 0;
+  }
+}
+
+/* ---- Toasts & overlay ---- */
+
+#toasts {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 3;
+}
+
+.toast {
+  padding: 8px 14px;
+  background: rgba(13, 31, 45, 0.92);
+  border: 1px solid #29b6f6;
+  border-radius: 5px;
+  font-size: 13px;
+}
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  z-index: 4;
+}
+
+#overlay[hidden] {
+  display: none;
+}
+
+#overlay h1 {
+  font-size: 40px;
+}
+
+/* ---- Button ---- */
 
 .sci-fi-button {
-    background-color: #0d1f2d; /* Dark blue background */
-    border: 1px solid #29b6f6; /* Bright blue border */
-    color: #29b6f6; /* Bright blue text */
-    font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  background-color: #0d1f2d; /* Dark blue background */
+  border: 1px solid #29b6f6; /* Bright blue border */
+  color: #29b6f6; /* Bright blue text */
+  font-family: "Orbitron", sans-serif;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .sci-fi-button:hover {
-    background-color: #29b6f6; /* Bright blue background on hover */
-    color: #0d1f2d; /* Dark blue text on hover */
-    box-shadow: 0 0 15px #29b6f6; /* Glowing effect */
+  background-color: #29b6f6; /* Bright blue background on hover */
+  color: #0d1f2d; /* Dark blue text on hover */
+  box-shadow: 0 0 15px #29b6f6; /* Glowing effect */
 }
 
 .sci-fi-button:active {
-    transform: scale(0.98); /* Slightly smaller button when clicked */
+  transform: scale(0.98); /* Slightly smaller button when clicked */
+}
+
+/* Narrow screens: panel at the bottom, field on top */
+@media (max-width: 800px) {
+  #panel {
+    top: 50%;
+    width: 100%;
+    border-right: none;
+    border-top: 1px solid #1c4a66;
+  }
+  #field {
+    left: 0;
+    bottom: 50%;
+  }
+}
+
+/* Campaign panels complement the original mining field. */
+[hidden] {
+  display: none !important;
+}
+body {
+  font-family: system-ui, sans-serif;
+}
+button,
+select {
+  font: inherit;
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+button:focus-visible,
+a:focus-visible,
+select:focus-visible {
+  outline: 2px solid #ffda88;
+  outline-offset: 3px;
+}
+#panel {
+  width: 470px;
+  background: rgba(5, 12, 22, 0.94);
+  padding: 16px;
+}
+#field {
+  left: 470px;
+}
+header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+header h1 {
+  font-size: 24px;
+  letter-spacing: 0.2em;
+}
+header button {
+  margin-left: auto;
+}
+.stats {
+  font-size: 12px;
+  gap: 14px;
+  margin-top: 10px;
+}
+.sci-fi-button {
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+#mission {
+  margin-top: 15px;
+  border: 1px solid #254557;
+  background: #0c1b29;
+  border-radius: 9px;
+  padding: 10px;
+}
+.toaster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toaster img {
+  width: 76px;
+  height: 55px;
+  flex-shrink: 0;
+}
+.toaster p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #efc993;
+  margin: 0;
+}
+#objectives {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+#objectives li {
+  font-size: 11px;
+  line-height: 1.4;
+  color: #6c8a9c;
+  padding: 3px 0 3px 25px;
+  position: relative;
+}
+#objectives li > span {
+  position: absolute;
+  left: 0;
+  width: 17px;
+  text-align: center;
+  border: 1px solid #31546a;
+  border-radius: 50%;
+  font-size: 10px;
+}
+#objectives li.done {
+  color: #78b6a1;
+}
+#objectives li.current {
+  color: #ebf6ff;
+}
+#objectives small {
+  display: block;
+  font-size: 10px;
+  color: #a8bfcc;
+  margin: 3px 0 4px;
+}
+#mission-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+#process-status {
+  font-size: 10px;
+  color: #85cbd3;
+  min-height: 14px;
+  margin: 8px 0 0;
+}
+#panel-tabs {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 0;
+}
+#panel-tabs button {
+  flex: 1;
+  border: 1px solid #31546a;
+  border-radius: 5px;
+  background: #112334;
+  color: #b7d5e4;
+  padding: 7px;
+  font-size: 11px;
+  cursor: pointer;
+}
+#panel-tabs button[aria-pressed="true"] {
+  border-color: #88d1da;
+  background: #214454;
+  color: #fff;
+}
+.tab-panel h2 {
+  font-size: 12px;
+  margin: 12px 0 10px;
+  letter-spacing: 0.05em;
+}
+.protect,
+.help {
+  font-size: 11px;
+  color: #91a9b9;
+  line-height: 1.6;
+}
+.help {
+  margin-top: 15px;
+}
+.protect {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 6px;
+}
+.tile {
+  border: 0;
+  padding: 0;
+  color: #fff;
+  background: transparent;
+  width: 70px;
+  height: 84px;
+}
+.tile-name {
+  display: block;
+  font-size: 9px;
+  line-height: 1.2;
+  margin-top: 3px;
+}
+.tile .count {
+  bottom: 25px;
+}
+.reserved {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 11px;
+}
+#inventory .tile .sprite {
+  margin: auto;
+}
+.item-art {
+  object-fit: contain;
+  background-image: none;
+  background-color: #122434;
+  border: 1px solid #395461;
+  border-radius: 9px;
+}
+.recipe {
+  color: #eee;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+  min-height: 60px;
+}
+.recipe > span:not(.sprite) {
+  display: block;
+  min-width: 0;
+}
+.recipe small {
+  font-size: 10px;
+  color: #85b5c9;
+  margin-top: 3px;
+}
+.recipe .name,
+.recipe .ingredients,
+.recipe small {
+  display: block;
+}
+.recipe .name {
+  font-size: 12px;
+}
+.recipe .ingredients {
+  font-size: 10px;
+  line-height: 1.5;
+}
+.system {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+.system small {
+  display: block;
+  font-size: 10px;
+  color: #90adbd;
+}
+#ship-log p {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #adc4d1;
+  border-bottom: 1px solid #23404f;
+  padding-bottom: 9px;
+}
+select {
+  background: #122434;
+  color: #def2ff;
+  border: 1px solid #35596d;
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 11px;
+}
+#recipe-filter {
+  margin-left: auto;
+  max-width: 160px;
+}
+#ship-scene {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  width: min(45%, 320px);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0.6;
+  filter: sepia(0.6) hue-rotate(320deg);
+}
+#ship-scene img {
+  width: 100%;
+  display: block;
+}
+#ship-state {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #ef977d;
+}
+#ship-scene.repaired {
+  filter: none;
+  opacity: 0.9;
+}
+#ship-scene.repaired #ship-state {
+  color: #9ee4da;
+}
+#ship-scene.charged {
+  filter: drop-shadow(0 0 16px #95d7fb);
+}
+#sector-label {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  right: 20px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #80b4c6;
+  pointer-events: none;
+}
+#field-tools {
+  position: absolute;
+  bottom: 18px;
+  left: 20px;
+  right: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: #071521e6;
+  padding: 10px;
+  border: 1px solid #23404f;
+  border-radius: 7px;
+}
+#field-tools label {
+  font-size: 11px;
+  color: #b1c7d3;
+}
+#field-tools small {
+  width: 100%;
+  font-size: 10px;
+  color: #8eafc0;
+}
+.rock {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+.ending-art {
+  width: min(340px, 70vw);
+}
+#overlay {
+  padding: 25px;
+  background: #06131fee;
+}
+#overlay h1 {
+  font-size: 30px;
+}
+#overlay p {
+  font: 14px/1.8 system-ui;
+  max-width: 650px;
+}
+.toast {
+  max-width: 450px;
+  font: 12px/1.5 system-ui;
+}
+footer .sci-fi-button {
+  margin-top: 8px;
+}
+#save-status {
+  font-size: 10px;
+  margin-left: 5px;
+}
+@media (max-width: 800px) {
+  #panel {
+    top: 43%;
+    width: 100%;
+    padding: 12px;
+  }
+  #field {
+    left: 0;
+    bottom: 57%;
+  }
+  #sector-label {
+    top: 12px;
+    font-size: 9px;
+  }
+  #ship-scene {
+    top: 40%;
+    width: 170px;
+  }
+  #field-tools {
+    bottom: 6px;
+    left: 10px;
+    right: 10px;
+    padding: 6px;
+    gap: 5px;
+  }
+  #field-tools label {
+    display: none;
+  }
+  #field-tools small {
+    font-size: 9px;
+  }
+  .stats {
+    gap: 12px;
+  }
+  #overlay h1 {
+    font-size: 24px;
+  }
+  #toasts {
+    bottom: auto;
+    top: 10px;
+    right: 10px;
+  }
+  .toast {
+    max-width: 80vw;
+  }
+}
+
+#relay-scene {
+  position: absolute;
+  right: 18px;
+  top: 60px;
+  width: 140px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+@media (max-width: 800px) {
+  #relay-scene {
+    width: 85px;
+    top: 32px;
+    right: 8px;
+  }
+}
+
+.lore {
+  border-top: 1px solid #23404f;
+  padding-top: 12px;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #a9becc;
+}
+.lore summary {
+  color: #efd099;
+  cursor: pointer;
+}
+
+#splash {
+  width: min(570px, calc(100vw - 30px));
+  max-height: calc(100svh - 30px);
+  overflow: auto;
+  border: 1px solid #447a91;
+  border-radius: 15px;
+  padding: 26px 32px;
+  color: #daecf4;
+  background: radial-gradient(ellipse at 50% 0%, #173347, #07121e 70%);
+  box-shadow: 0 20px 100px #000b;
+}
+#splash::backdrop {
+  background: #02070de8;
+  backdrop-filter: blur(7px);
+}
+.splash-content {
+  text-align: center;
+}
+.splash-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 10px !important;
+  color: #a5c0ce;
+}
+.splash-ship {
+  width: 190px;
+  height: 115px;
+  margin: 8px auto;
+}
+#splash h1 {
+  font-size: 40px;
+  letter-spacing: 0.2em;
+}
+#splash h2 {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  margin: 10px 0 20px;
+}
+#splash p {
+  font:
+    13px/1.7 system-ui,
+    sans-serif;
+}
+#splash .muted {
+  font-size: 11px;
+}
+.splash-goal {
+  padding: 14px;
+  border: 1px solid #274758;
+  background: #0e2333;
+  border-radius: 8px;
+  color: #edce95;
+}
+.splash-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 23px 0 10px;
+}
+.splash-actions button {
+  padding: 12px 18px;
+  font-size: 11px;
+}
+#splash-continue,
+#splash-new:only-child {
+  background: #1c4b5d;
+}
+@media (max-height: 700px) {
+  #splash {
+    padding: 18px 24px;
+  }
+  .splash-ship {
+    height: 70px;
+    width: 125px;
+    margin: 0 auto;
+  }
+  #splash h1 {
+    font-size: 30px;
+  }
+  #splash h2 {
+    margin: 6px 0 12px;
+  }
+  .splash-actions {
+    margin-top: 14px;
+  }
+}
+
+.language-switch {
+  white-space: nowrap;
+}
+header .language-switch {
+  margin-left: auto;
+}
+header #pause {
+  margin-left: 0;
+}
+.splash-language {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+@media (max-width: 480px) {
+  header {
+    gap: 6px;
+  }
+  header h1 {
+    font-size: 21px;
+  }
+  header .muted {
+    font-size: 9px;
+  }
+  header .sci-fi-button {
+    padding: 6px 8px;
+  }
+}
+
+/* Touch-first layout keeps the field, quest actions and system tabs accessible. */
+.fullScreen {
+  height: 100svh;
+  height: 100dvh;
+}
+button,
+select,
+summary {
+  touch-action: manipulation;
+}
+#toasts {
+  pointer-events: none;
+}
+#mission-details > summary {
+  cursor: pointer;
+  font-size: 11px;
+  color: #9fd8f7;
+  padding: 8px 0;
+}
+#help-details > summary {
+  cursor: pointer;
+  color: #9fd8f7;
+}
+#help-details[open] > summary {
+  margin-bottom: 8px;
+}
+@media (pointer: coarse) {
+  .sci-fi-button,
+  select,
+  #panel-tabs button {
+    min-height: 44px;
+  }
+  .tile {
+    min-width: 70px;
+    min-height: 84px;
+  }
+  .recipe {
+    min-height: 64px;
+  }
+  input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+  }
+  .protect {
+    min-height: 44px;
+  }
+}
+@media (max-width: 800px) {
+  .fullScreen {
+    display: grid;
+    grid-template-rows: minmax(190px, 36dvh) minmax(0, 1fr);
+  }
+  #field {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-height: 0;
+    grid-row: 1;
+  }
+  #panel {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-height: 0;
+    grid-row: 2;
+    display: grid;
+    grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+    gap: 6px;
+    overflow: hidden;
+    padding: 10px max(10px, env(safe-area-inset-right))
+      max(8px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  }
+  #panel > header {
+    grid-row: 1;
+    gap: 7px;
+  }
+  #panel > header > .muted {
+    display: none;
+  }
+  #panel > .stats {
+    grid-row: 2;
+    margin: 0;
+    font-size: 12px;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+  #panel > #mission {
+    grid-row: 3;
+    margin: 0;
+    padding: 6px 9px;
+    max-height: 32dvh;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  #panel > #panel-tabs {
+    grid-row: 4;
+    margin: 0;
+  }
+  #panel > .tab-panel {
+    grid-row: 5;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding-right: 3px;
+  }
+  #panel > footer {
+    grid-row: 6;
+    margin: 0;
+    font-size: 11px;
+    max-height: 25dvh;
+    overflow: auto;
+  }
+  #panel h1 {
+    font-size: 21px;
+    margin: 0;
+  }
+  .toaster img {
+    width: 42px;
+    height: 34px;
+  }
+  .toaster p {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  #mission-details > summary {
+    padding: 7px 0;
+    min-height: 30px;
+  }
+  #objectives {
+    margin: 2px 0 8px;
+  }
+  #mission-actions .sci-fi-button {
+    width: 100%;
+    font-size: 10px;
+    white-space: normal;
+  }
+  #process-status {
+    margin: 3px 0 0;
+    font-size: 10px;
+  }
+  #field-tools {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+    padding: 7px;
+  }
+  #field-tools select {
+    min-width: 0;
+    width: 100%;
+    font-size: 16px;
+  }
+  #field-tools label {
+    display: none;
+  }
+  #field-tools small {
+    grid-column: 1/-1;
+    line-height: 1.35;
+  }
+  #ship-scene {
+    width: 140px;
+    top: 37%;
+  }
+  #ship-state {
+    font-size: 9px;
+  }
+  #relay-scene {
+    width: 65px;
+    top: 28px;
+  }
+  #sector-label {
+    top: 10px;
+    font-size: 8px;
+  }
+  #recipe-filter {
+    font-size: 16px;
+    max-width: 180px;
+  }
+  .tab-panel h2 {
+    margin: 4px 0 7px;
+  }
+  #help-details > summary {
+    min-height: 32px;
+    padding: 6px 0;
+  }
+  #toasts {
+    top: 38px;
+    right: 8px;
+    max-width: 85vw;
+  }
+  .toast {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+  #splash {
+    padding: 16px 20px;
+  }
+  .splash-ship {
+    width: 135px;
+    height: 75px;
+  }
+  #splash h1 {
+    font-size: 30px;
+  }
+  #splash h2 {
+    margin: 6px 0 12px;
+  }
+  #splash p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .splash-actions {
+    flex-wrap: wrap;
+    margin: 15px 0 7px;
+  }
+  .splash-actions button {
+    flex: 1;
+    min-height: 46px;
+  }
+  #overlay {
+    overflow: auto;
+    justify-content: flex-start;
+    padding-top: 20px;
+    gap: 10px;
+  }
+  #overlay p {
+    font-size: 12px;
+  }
+}
+@media (max-height: 500px) and (max-width: 1000px) {
+  .fullScreen {
+    display: block;
+  }
+  #panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 49%;
+    display: grid;
+    grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+    padding: 8px;
+    gap: 4px;
+    overflow: hidden;
+  }
+  #field {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 49%;
+    right: 0;
+    width: auto;
+  }
+  #panel > header {
+    grid-row: 1;
+    gap: 5px;
+  }
+  #panel > header > .muted {
+    display: none;
+  }
+  #panel > .stats {
+    grid-row: 2;
+    margin: 0;
+    font-size: 11px;
+  }
+  #panel > #mission {
+    grid-row: 3;
+    max-height: 95px;
+    margin: 0;
+    padding: 5px;
+    overflow: auto;
+  }
+  .toaster img {
+    display: none;
+  }
+  .toaster p {
+    display: none;
+  }
+  #mission-details > summary {
+    padding: 4px 0;
+  }
+  #panel > #panel-tabs {
+    grid-row: 4;
+    margin: 0;
+  }
+  #panel > .tab-panel {
+    grid-row: 5;
+    min-height: 0;
+    overflow: auto;
+  }
+  #panel > footer {
+    grid-row: 6;
+    max-height: 70px;
+    overflow: auto;
+    margin: 0;
+  }
+  #panel h1 {
+    font-size: 18px;
+  }
+  #mission-actions .sci-fi-button {
+    font-size: 9px;
+    padding: 5px;
+  }
+  #process-status {
+    font-size: 9px;
+    margin: 0;
+  }
+  #field-tools {
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+  }
+}
+
+/* Short portrait phones need space for at least one complete crafting row. */
+@media (max-width: 800px) and (max-height: 650px) and (orientation: portrait) {
+  .fullScreen {
+    grid-template-rows: minmax(150px, 30dvh) minmax(0, 1fr);
+  }
+  #mission .toaster {
+    display: none;
+  }
+  #ship-scene {
+    width: 105px;
+    top: 30%;
+  }
+  #sector-label {
+    font-size: 7px;
+  }
+}
+
+#cargo-upgrades {
+  padding: 10px;
+  border: 1px solid #375c70;
+  border-radius: 7px;
+  background: #102637;
+  margin: 0 0 10px;
+}
+.cargo-upgrade-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+  color: #b7deec;
+}
+#cargo-limit {
+  font-size: 10px;
+  color: #8fbbc8;
+}
+#cargo-upgrade-details,
+#cargo-upgrade-reason {
+  font-size: 10px;
+  line-height: 1.5;
+  color: #a8c5d3;
+  margin: 7px 0;
+}
+#cargo-upgrade-reason {
+  color: #e8be85;
+  margin-bottom: 0;
+}
+.cargo-warning {
+  padding: 8px;
+  border: 1px solid #9a713a;
+  background: #30251a;
+  color: #f4cb8e;
+  font-size: 11px;
+  line-height: 1.5;
+}
+#cargo-count.full {
+  color: #ffc36b;
+}
+@media (pointer: coarse) {
+  #build-cargo {
+    width: 100%;
+  }
+}
+
+#emergency-cargo {
+  border: 1px solid #86613b;
+  border-radius: 6px;
+  padding: 8px;
+  margin: 10px 0;
+  background: #251e17;
+  font-size: 11px;
+  color: #e7c8a5;
+}
+#emergency-cargo summary {
+  cursor: pointer;
+  min-height: 30px;
+  line-height: 30px;
+}
+#emergency-cargo p {
+  line-height: 1.5;
+  margin: 6px 0;
+}
+.release-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 65px auto;
+  gap: 6px;
+}
+.release-controls select,
+.release-controls input {
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid #6c6756;
+  border-radius: 4px;
+  background: #122434;
+  color: #f3e1c4;
+  padding: 7px;
+  font: 14px system-ui;
+}
+@media (pointer: coarse) {
+  .release-controls select,
+  .release-controls input {
+    min-height: 44px;
+    font-size: 16px;
+  }
+}
+@media (max-width: 360px) {
+  .release-controls {
+    grid-template-columns: minmax(0, 1fr) 65px;
+  }
+  .release-controls button {
+    grid-column: 1/-1;
+  }
 }

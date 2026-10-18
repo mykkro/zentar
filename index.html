@@ -1,0 +1,235 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+      name="viewport"
+    />
+    <title>Zentar - Escape the Belt</title>
+    <link href="media/style.css" rel="stylesheet" />
+    <script defer="" src="space.js"></script>
+    <script defer="" src="campaign-data.js"></script>
+    <script defer="" src="campaign-core.js"></script>
+    <script defer="" src="locales/cs.js"></script>
+    <script defer="" src="i18n.js"></script>
+    <script defer="" src="campaign.js"></script>
+  </head>
+  <body>
+    <div class="fullScreen" id="fullScreen">
+      <div id="field">
+        <canvas id="canvas2d"></canvas>
+        <div aria-hidden="true" id="ship-scene">
+          <img alt="" src="media/art/ship.svg" /><span id="ship-state"
+            >HULL BREACH</span
+          >
+        </div>
+        <img
+          alt="Survey relay"
+          hidden=""
+          id="relay-scene"
+          src="media/art/beacon.svg"
+        />
+        <div id="sector-label">THE OUTER BELT / STRANDED</div>
+        <div id="field-tools">
+          <label for="salvage-target">Targeted salvage</label
+          ><select id="salvage-target"></select
+          ><button class="sci-fi-button" id="salvage">Tractor recovery</button
+          ><small id="salvage-status"
+            >Guaranteed recovery in 8 seconds. Free; no fuel needed.</small
+          >
+        </div>
+      </div>
+      <main id="panel">
+        <header>
+          <h1>ZENTAR</h1>
+          <button
+            class="sci-fi-button language-switch"
+            data-language-switch=""
+            type="button"
+          >
+            Česky
+          </button>
+          <span class="muted">ESCAPE THE BELT</span
+          ><button class="sci-fi-button" id="pause">Pause</button>
+        </header>
+        <div class="stats">
+          <span>Credits <b id="credits">0</b></span
+          ><span>Time <b id="time">0:00</b></span
+          ><span>Energy <b id="energy">0/60</b></span>
+        </div>
+        <section id="mission">
+          <div class="toaster">
+            <img
+              alt="TOAST-9, your talking toaster"
+              src="media/art/toaster.svg"
+            />
+            <p id="toaster-line"></p>
+          </div>
+          <details id="mission-details" open="">
+            <summary>Mission objectives</summary>
+            <ol id="objectives"></ol>
+          </details>
+          <div id="mission-actions"></div>
+          <p id="process-status" role="status"></p>
+        </section>
+        <nav aria-label="Ship systems" id="panel-tabs">
+          <button aria-pressed="true" data-tab="cargo-panel">Cargo</button
+          ><button aria-pressed="false" data-tab="craft-panel">
+            Fabrication</button
+          ><button aria-pressed="false" data-tab="fleet-panel">
+            Ship &amp; log
+          </button>
+        </nav>
+        <section class="tab-panel" id="cargo-panel">
+          <h2>
+            Cargo <span id="cargo-count">0/40</span
+            ><button class="sci-fi-button" id="sell-all">Sell surplus</button>
+          </h2>
+          <div id="cargo-upgrades">
+            <div class="cargo-upgrade-heading">
+              <strong>Cargo expansion</strong
+              ><span id="cargo-limit">Maximum 200 slots</span>
+            </div>
+            <p id="cargo-upgrade-details"></p>
+            <button id="build-cargo" class="sci-fi-button" type="button">
+              Build Cargo Pod
+            </button>
+            <p id="cargo-upgrade-reason"></p>
+          </div>
+          <p id="cargo-warning" class="cargo-warning" role="status" hidden></p>
+          <label class="protect"
+            ><input checked="" id="protect" type="checkbox" /> Protect quest
+            cargo</label
+          >
+          <details id="emergency-cargo">
+            <summary>Free cargo space</summary>
+            <p>
+              Sell a chosen quantity, even if protected. Other cargo stays
+              protected.
+            </p>
+            <div class="release-controls">
+              <select id="release-item" aria-label="Cargo to release"></select
+              ><input
+                id="release-quantity"
+                aria-label="Quantity to sell"
+                type="number"
+                min="1"
+                max="999"
+                value="5"
+                inputmode="numeric"
+              /><button id="release-cargo" class="sci-fi-button" type="button">
+                Sell selected
+              </button>
+            </div>
+          </details>
+          <div class="tiles" id="inventory"></div>
+          <p class="help">
+            Click cargo to sell one; Shift-click sells the surplus stack.
+            Reserved cargo has a lock. Disable protection to sell anything if
+            you need space.
+          </p>
+        </section>
+        <section class="tab-panel" hidden="" id="craft-panel">
+          <h2>
+            Fabrication
+            <select aria-label="Recipe filter" id="recipe-filter">
+              <option value="all">All blueprints</option>
+              <option value="ready">Ready now</option>
+              <option value="machines">Machines</option>
+              <option value="materials">Materials</option>
+              <option value="storage">Cargo upgrades</option>
+            </select>
+          </h2>
+          <div id="crafting"></div>
+        </section>
+        <section class="tab-panel" hidden="" id="fleet-panel">
+          <h2>Installed systems</h2>
+          <div class="tiles" id="machines"></div>
+          <h2>Ship log</h2>
+          <div id="ship-log"></div>
+          <details class="lore">
+            <summary>Recovered notes: the Ulerium prospectors</summary>
+            <p>
+              Old prospectors converted Craponite into Ulerium, built improbable
+              ships and dreamed of destroying ever larger celestial objects.
+              Their notes mention Bacquelitte, Bullshit Crystals, Fotron
+              torpedoes, pirates, space madness and the gods Caopectat and
+              Gutalax.
+            </p>
+            <p>
+              TOAST-9 has repurposed their synthesis process for a smaller
+              ambition: a safe journey home. The reactor and containment systems
+              keep that ambition manageable.
+            </p>
+            <p>
+              These are the game's precursor notes, not extra objectives.
+              Pirates and radiation are route lore in this campaign; there is no
+              hidden combat or decay timer.
+            </p>
+          </details>
+        </section>
+        <footer>
+          <details id="help-details" open="">
+            <summary>Help &amp; settings</summary>
+            Click drifting asteroids to mine. Use tractor recovery to target
+            missing materials. Reactor energy renews without fuel. P / Esc
+            pauses.<br /><button class="sci-fi-button" id="new-game">
+              New game
+            </button>
+            <button class="sci-fi-button" id="briefing">
+              Mission briefing
+            </button>
+            <span id="save-status">Progress saves locally.</span>
+            <a href="ATTRIBUTION.md" rel="noopener" target="_blank"
+              >Credits &amp; asset provenance</a
+            >
+          </details>
+        </footer>
+      </main>
+      <div aria-live="polite" id="toasts" role="status"></div>
+      <div hidden="" id="overlay"></div>
+    </div>
+    <dialog aria-labelledby="splash-title" id="splash">
+      <div class="splash-content">
+        <div class="splash-language">
+          <button
+            class="sci-fi-button language-switch"
+            data-language-switch=""
+            type="button"
+          >
+            Česky
+          </button>
+        </div>
+        <p class="splash-kicker">A stranded ship. One ambitious toaster.</p>
+        <img
+          alt="Your stranded ship"
+          class="splash-ship"
+          src="media/art/ship.svg"
+        />
+        <h1 id="splash-title">ZENTAR</h1>
+        <h2>Escape the Belt</h2>
+        <p>
+          Your ship is broken in an asteroid belt. With TOAST-9 as your unlikely
+          chief engineer, rebuild its systems and find a way to
+          <strong>Zentar Haven</strong>.
+        </p>
+        <p class="splash-goal">
+          Mine and craft → repair the hull → survey a safe corridor → build,
+          charge and launch the Warp Drive.
+        </p>
+        <p class="muted">
+          Click drifting resources to mine. Tractor recovery guarantees missing
+          materials. Your progress saves in this browser.
+        </p>
+        <div class="splash-actions">
+          <button class="sci-fi-button" hidden="" id="splash-continue">
+            Continue voyage</button
+          ><button class="sci-fi-button" id="splash-new">New game</button>
+        </div>
+        <p class="muted" id="splash-save"></p>
+      </div>
+    </dialog>
+  </body>
+</html>
